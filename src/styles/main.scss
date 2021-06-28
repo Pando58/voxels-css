@@ -1,0 +1,83 @@
+*, ::after, ::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 200px;
+}
+
+body {
+  background: #222222;
+}
+
+#game-viewport {
+  width: 100vw;
+  height: 100vh;
+  perspective: 2.5rem;
+  perspective-origin: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#scene-pos-wrapper {
+  transform:
+    translateZ(2.5rem) // Match with viewport perspective distance
+  ;
+  transform-style: preserve-3d;
+}
+
+#scene {
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.cube {
+  transform-style: preserve-3d;
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  top: -0.5rem;
+  left: -0.5rem;
+  // background: #F44;
+
+  & > div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #4FF4;
+    border: 1px solid #FFFA;
+  }
+
+  .front  { transform:                 translateZ(0.5em) }
+  .left   { transform: rotateY(270deg) translateZ(0.5em) }
+  .back   { transform: rotateY(180deg) translateZ(0.5em) }
+  .right  { transform: rotateY(90deg)  translateZ(0.5em) }
+  .top    { transform: rotateX(90deg)  translateZ(0.5em) }
+  .bottom { transform: rotateX(-90deg) translateZ(0.5em) }
+}
+
+/* .cube {
+  transform-style: preserve-3d;
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  top: -2rem;
+  left: -2rem;
+
+  & > div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #F44;
+  }
+
+  .front  { transform: rotateX(270deg) translateZ(2em) }
+  .left   { transform: rotateX(270deg) rotateY(90deg) translateZ(2em) }
+  .back   { transform: rotateX(270deg) rotateY(180deg) translateZ(2em) }
+  .right  { transform: rotateX(270deg) rotateY(270deg) translateZ(2em) }
+  .top    { transform: translateZ(2em) }
+  .bottom { transform: rotateX(180deg) translateZ(2em) }
+} */
