@@ -8,5 +8,6 @@ export default class Air extends Block {
     this.id = 'air';
   }
 
-  initialize(): void {}
+  protected initialize(): void {}
+  public update(): void {}
 }

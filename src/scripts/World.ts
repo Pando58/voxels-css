@@ -1,31 +1,41 @@
 import Block from './Block'
-import Air from './Blocks/Air'
+import Air from './blocks/Air'
+import Entity from './Entity';
 
 export default class World {
   blocks: {[key: number]: {[key: number]: {[key: number]: Block}}} = {};
+  entities: Entity[] = [];
   scene: HTMLDivElement;
 
   constructor(scene: HTMLDivElement) {
     this.scene = scene;
 
     for (let i = 0; i < 16; i++) {
-      for (let j = 0; j < 16; j++) {
-        this.createBlock(i, 0, j);
+      for (let j = 0; j < 2; j++) {
+        for (let k = 0; k < 16; k++) {
+          this.createBlock(i, j, k);
+        }
       }
     }
     
     for (let i = 0; i < 16; i++) {
-      for (let j = 0; j < 16; j++) {
-        this.getBlock(i, 0, j).update();
+      for (let j = 0; j < 2; j++) {
+        for (let k = 0; k < 16; k++) {
+          this.getBlock(i, j, k).update();
+        }
       }
     }
+  }
+
+  public loop(): void {
+    this.entities.forEach(i => i.loop());
   }
 
   private createBlock(x: number, y: number, z: number): void {
     let block;
 
+    block = new Block(x, y, z, this);
     if (Math.random() > 0.5) {
-      block = new Block(x, y, z, this);
     } else {
       block = new Air(x, y, z, this)
     }
@@ -40,7 +50,9 @@ export default class World {
 
     this.blocks[x][y][z] = block;
 
-    this.scene.appendChild(block.element);
+    if (block.id !== 'air') {
+      this.scene.appendChild((block.element as HTMLDivElement));
+    }
   }
 
   public getBlock(x: number, y: number, z: number): any {
@@ -50,5 +62,9 @@ export default class World {
     if(!this.blocks[x][y][z]) return null;
 
     return this.blocks[x][y][z];
+  }
+
+  public addEntity(entity: Entity): void {
+    this.entities.push(entity);
   }
 }

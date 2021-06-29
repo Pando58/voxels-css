@@ -2,12 +2,9 @@ export default class InputController {
   mouseLocked: boolean = false;
   mouseSensitivity: number;
 
-  mouseEvents: ((x: number, y: number, sensitivity: number) => void)[] = [];
-  keyboardLoopEvents: {
-    key: string,
-    pressed: boolean,
-    fn: () => void
-  }[] = [];
+  mouseEvents: ( (x: number, y: number, sensitivity: number) => void )[] = [];
+  keyboardEvents: ( (key: string, pressed: boolean) => void )[] = [];
+  keyboardLoopEvents: { key: string, pressed: boolean, fn: () => void }[] = [];
 
   keys = {
     up: false,
@@ -33,19 +30,19 @@ export default class InputController {
     viewport.addEventListener('click', () => viewport.requestPointerLock());
     document.addEventListener('pointerlockchange', () => this.mouseLocked = document.pointerLockElement === viewport);
 
-    // Mouse
-    document.addEventListener('mousemove', e => {
-      if (!this.mouseLocked) return;
-    
-      this.mouseEvents.forEach(i => i(e.movementX, e.movementY, this.mouseSensitivity));
-    });
-    
     // Prevent Ctrl shortcuts
     document.body.addEventListener('keydown', event => {
       if (event.ctrlKey && 'cvxspwuaz'.indexOf(event.key) !== -1) {
         event.preventDefault()
       }
     })
+    
+    // Mouse
+    document.addEventListener('mousemove', e => {
+      if (!this.mouseLocked) return;
+    
+      this.mouseEvents.forEach(i => i(e.movementX, e.movementY, this.mouseSensitivity));
+    });
     
     // Keyboard down
     document.addEventListener('keydown', e => {
@@ -56,6 +53,8 @@ export default class InputController {
           (this.keys as any)[k] = true;
         }
       }
+
+      this.keyboardEvents.forEach(i => i((Object.keys(this.keyMaps).find(key => (this.keyMaps as any)[key] === e.code) as string), true));
     });
 
     // Keyboard up
@@ -65,6 +64,8 @@ export default class InputController {
           (this.keys as any)[k] = false;
         }
       }
+
+      this.keyboardEvents.forEach(i => i((Object.keys(this.keyMaps).find(key => (this.keyMaps as any)[key] === e.code) as string), false));
     });
   }
 
@@ -78,6 +79,10 @@ export default class InputController {
 
   onMouse(fn: (x: number, y: number, sensitivity: number) => void): void {
     this.mouseEvents.push(fn);
+  }
+
+  onKeyboard(fn: (key: string, pressed: boolean) => void): void {
+    this.keyboardEvents.push(fn);
   }
 
   onKeyboardLoop(key: string, pressed: boolean, fn: () => void): void {

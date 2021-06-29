@@ -6,7 +6,7 @@ export default class Block {
   private z: number;
   private world: World;
   public id: string = 'solid';
-  public element: HTMLDivElement = document.createElement('div');
+  public element: HTMLDivElement | null = null;
   private faces: {
     front: HTMLDivElement | null,
     left: HTMLDivElement | null,
@@ -50,6 +50,7 @@ export default class Block {
   }
 
   protected initialize(): void {
+    this.element = document.createElement('div');
     this.element.classList.add('cube');
     
     this.element.style.transform = `
@@ -85,7 +86,7 @@ export default class Block {
           faces[key] = document.createElement('div');
           faces[key].classList.add(key);
 
-          this.element.appendChild(faces[key]);
+          (this.element as HTMLDivElement).appendChild(faces[key]);
         }
       } else {
         if (faces[key] !== null) {
@@ -93,7 +94,5 @@ export default class Block {
         }
       }
     });
-
-    // console.log(this.faces);
   }
 }
