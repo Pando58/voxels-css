@@ -11,7 +11,7 @@ export default class World {
     this.scene = scene;
 
     for (let i = 0; i < 16; i++) {
-      for (let j = 0; j < 2; j++) {
+      for (let j = 0; j < 6; j++) {
         for (let k = 0; k < 16; k++) {
           this.createBlock(i, j, k);
         }
@@ -19,7 +19,7 @@ export default class World {
     }
     
     for (let i = 0; i < 16; i++) {
-      for (let j = 0; j < 2; j++) {
+      for (let j = 0; j < 6; j++) {
         for (let k = 0; k < 16; k++) {
           (this.getBlock(i, j, k) as Block).update();
         }
@@ -34,8 +34,8 @@ export default class World {
   private createBlock(x: number, y: number, z: number): void {
     let block;
 
-    block = new Block(x, y, z, this);
-    if (Math.random() > 0.5) {
+    if (Math.random() > 0.8) {
+      block = new Block(x, y, z, this);
     } else {
       block = new Air(x, y, z, this)
     }
