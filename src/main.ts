@@ -20,10 +20,14 @@ const input = new InputController(viewport, {
 });
 
 
-const player = new Player({ x: 8, y: 6, z: 16 });
+const player = new Player(world, { x: 8, y: 6, z: 16 });
 
 world.addEntity(player);
-camera.bindPosition(player);
+camera.bindPosition(player, {
+  x: 0,
+  y: 1.625,
+  z: 0
+});
 player.attachToCamera(camera);
 
 

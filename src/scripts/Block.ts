@@ -5,7 +5,12 @@ export default class Block {
   private y: number;
   private z: number;
   private world: World;
+  
   public id: string = 'solid';
+  protected properties = {
+    isSolid: true
+  };
+  
   public element: HTMLDivElement | null = null;
   private faces: {
     front: HTMLDivElement | null,
@@ -94,5 +99,17 @@ export default class Block {
         }
       }
     });
+  }
+
+  public getPosition(): { x: number, y: number, z: number } {
+    return {
+      x: this.x,
+      y: this.y,
+      z: this.z
+    };
+  }
+
+  public isSolid(): boolean {
+    return this.properties.isSolid;
   }
 }

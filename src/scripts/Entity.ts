@@ -1,4 +1,7 @@
+import World from './World'
+
 export default class Entity {
+  protected world: World;
   protected position: {
     x: number,
     y: number,
@@ -13,8 +16,18 @@ export default class Entity {
     y: 0,
     z: 0
   };
+
+  protected bbox = {
+    x: -0.5,
+    y: -0.5,
+    z: -0.5,
+    w: 1,
+    h: 1,
+    d: 1
+  };
   
-  constructor ({x, y, z}: { x: number, y: number, z: number }) {
+  constructor (world: World, {x, y, z}: { x: number, y: number, z: number }) {
+    this.world = world;
     this.position = {x, y, z};
   }
 

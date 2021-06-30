@@ -50,7 +50,7 @@ body {
     height: 100%;
     backface-visibility: hidden;
     background: rgb(30, 47, 83);
-    border: 2px solid #FFF;
+    // border: 2px solid #FFF;
   }
 
   .front  { transform:                 translateZ(0.5em) }
@@ -59,6 +59,11 @@ body {
   .right  { transform: rotateY(90deg)  translateZ(0.5em) }
   .top    { transform: rotateX(90deg)  translateZ(0.5em) }
   .bottom { transform: rotateX(-90deg) translateZ(0.5em) }
+
+  .top          { background: darken(rgb(30, 47, 83), 0%) }
+  .left, .right { background: darken(rgb(30, 47, 83), 5%) }
+  .front, .back { background: darken(rgb(30, 47, 83), 10%) }
+  .bottom       { background: darken(rgb(30, 47, 83), 15%) }
 }
 
 /* .cube {

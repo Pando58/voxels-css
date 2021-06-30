@@ -16,6 +16,11 @@ export default class Camera {
   } = {
     position: null
   };
+  private bindedPositionOffset = {
+    x: 0,
+    y: 0,
+    z: 0
+  }
 
   // keys = {
   //   up: false,
@@ -45,9 +50,9 @@ export default class Camera {
     if (this.bindedEntity.position !== null) {
       const { x, y, z } = this.bindedEntity.position.getPosition();
 
-      this.position.x = x;
-      this.position.y = y;
-      this.position.z = z;
+      this.position.x = x + this.bindedPositionOffset.x;
+      this.position.y = y + this.bindedPositionOffset.y;
+      this.position.z = z + this.bindedPositionOffset.z;
     }
     
     // Move camera transforming CSS
@@ -79,8 +84,10 @@ export default class Camera {
     this.rotation.pitch = Math.min(Math.max(pitch, -90), 90);
   }
 
-  public bindPosition(entity: Entity): void {
+  public bindPosition(entity: Entity, offset?: { x: number, y: number, z: number }): void {
     this.bindedEntity.position = entity;
+
+    if (offset) this.bindedPositionOffset = offset;
   }
 
   public getRotation() {

@@ -21,7 +21,7 @@ export default class World {
     for (let i = 0; i < 16; i++) {
       for (let j = 0; j < 2; j++) {
         for (let k = 0; k < 16; k++) {
-          this.getBlock(i, j, k).update();
+          (this.getBlock(i, j, k) as Block).update();
         }
       }
     }
@@ -55,7 +55,7 @@ export default class World {
     }
   }
 
-  public getBlock(x: number, y: number, z: number): any {
+  public getBlock(x: number, y: number, z: number): Block | null {
     if (!Object.keys(this.blocks).find(i => parseInt(i) === x)) return null;
     if (!Object.keys(this.blocks[x]).find(i => parseInt(i) === y)) return null;
     if (!Object.keys(this.blocks[x][y]).find(i => parseInt(i) === z)) return null;
