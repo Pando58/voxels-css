@@ -55,7 +55,7 @@ export default class Camera {
     rotateX(${-this.rotation.pitch}deg)
     rotateY(${ this.rotation.yaw}deg)
     translateX(0.5rem)
-    translateY(0.5rem)
+    translateY(-0.5rem)
     translateZ(0.5rem)
     translateX(${-this.position.x}rem)
     translateY(${ this.position.y}rem)
