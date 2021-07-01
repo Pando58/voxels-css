@@ -2,30 +2,21 @@ export default class InputController {
   mouseLocked: boolean = false;
   mouseSensitivity: number;
 
-  mouseEvents: ( (x: number, y: number, sensitivity: number) => void )[] = [];
+  mouseEvents: ( (x: number, y: number) => void )[] = [];
   keyboardEvents: ( (key: string, pressed: boolean) => void )[] = [];
   keyboardLoopEvents: { key: string, pressed: boolean, fn: () => void }[] = [];
 
-  keys = {
-    up: false,
-    left: false,
-    down: false,
-    right: false,
-    jump: false,
-    crouch: false
-  }
+  keys: {[key: string]: boolean} = {};
 
-  keyMaps = {
-    up: 'KeyW',
-    left: 'KeyA',
-    down: 'KeyS',
-    right: 'KeyD',
-    jump: 'Space',
-    crouch: 'ControlLeft'
-  };
+  keyMaps: {[key: string]: string};
   
-  constructor(viewport: HTMLDivElement, config: { mouseSensitivity?: number } = {}) {
+  constructor(viewport: HTMLDivElement, keyMaps: {[key: string]: string}, config: { mouseSensitivity?: number } = {}) {
     this.mouseSensitivity = config.mouseSensitivity || 0.2;
+    this.keyMaps = keyMaps;
+
+    Object.keys(keyMaps).forEach(i => {
+      this.keys[i] = false;
+    });
     
     viewport.addEventListener('click', () => viewport.requestPointerLock());
     document.addEventListener('pointerlockchange', () => this.mouseLocked = document.pointerLockElement === viewport);
@@ -41,7 +32,7 @@ export default class InputController {
     document.addEventListener('mousemove', e => {
       if (!this.mouseLocked) return;
     
-      this.mouseEvents.forEach(i => i(e.movementX, e.movementY, this.mouseSensitivity));
+      this.mouseEvents.forEach(i => i(e.movementX * this.mouseSensitivity, e.movementY * this.mouseSensitivity));
     });
     
     // Keyboard down
@@ -77,7 +68,7 @@ export default class InputController {
     });
   }
 
-  onMouse(fn: (x: number, y: number, sensitivity: number) => void): void {
+  onMouse(fn: (x: number, y: number) => void): void {
     this.mouseEvents.push(fn);
   }
 

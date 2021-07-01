@@ -10,6 +10,12 @@ export default class Player extends Entity {
   private jumpForce = 0.11;
   private verticalFlySpeed = 0.15;
 
+  private viewOffset = {
+    x: 0,
+    y: 1.625,
+    z: 0
+  };
+
   protected bbox = {
     x: -0.3125,
     y: 0,
@@ -27,15 +33,6 @@ export default class Player extends Entity {
     jump: false,
     crouch: false
   }
-
-  private keyMaps = {
-    up: 'KeyW',
-    left: 'KeyA',
-    down: 'KeyS',
-    right: 'KeyD',
-    jump: 'Space',
-    crouch: 'ControlLeft'
-  };
 
   private attachedCamera: Camera | null = null;
   
@@ -55,7 +52,7 @@ export default class Player extends Entity {
     // Move
     const xVal = (this.keys.right ? 1 : 0) - (this.keys.left ? 1 : 0);
     const zVal = (this.keys.down ? 1 : 0) - (this.keys.up ? 1 : 0);
-    const yVal = (this.keys.jump ? 1 : 0) - (this.keys.crouch ? 1 : 0);
+    // const yVal = (this.keys.jump ? 1 : 0) - (this.keys.crouch ? 1 : 0);
 
     this.motion.x = (Math.cos(this.rotation.yaw * Math.PI / 180) * xVal * this.walkSpeed) + (Math.cos((this.rotation.yaw + 90) * Math.PI / 180) * zVal * this.walkSpeed);
     this.motion.z = (Math.sin(this.rotation.yaw * Math.PI / 180) * xVal * this.walkSpeed) + (Math.sin((this.rotation.yaw + 90) * Math.PI / 180) * zVal * this.walkSpeed);
@@ -211,6 +208,10 @@ export default class Player extends Entity {
     this.attachedCamera = camera;
   }
 
+  public getCameraOffset() {
+    return this.viewOffset;
+  };
+  
   public setKeyboardInput(key: string, pressed: boolean): void {    
     if (this.keys.hasOwnProperty(key)) {
       (this.keys as any)[key] = pressed;

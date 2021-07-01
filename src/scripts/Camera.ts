@@ -1,4 +1,4 @@
-import Entity from './Entity';
+import Player from './entities/Player'
 
 export default class Camera {
   private position: {
@@ -12,15 +12,10 @@ export default class Camera {
   }
   private scene: HTMLDivElement;
   private bindedEntity: {
-    position: Entity | null
+    position: Player | null
   } = {
     position: null
   };
-  private bindedPositionOffset = {
-    x: 0,
-    y: 0,
-    z: 0
-  }
 
   // keys = {
   //   up: false,
@@ -49,10 +44,11 @@ export default class Camera {
     // Move with entity if binded
     if (this.bindedEntity.position !== null) {
       const { x, y, z } = this.bindedEntity.position.getPosition();
+      const { x: vx, y: vy, z: vz } = this.bindedEntity.position.getCameraOffset();
 
-      this.position.x = x + this.bindedPositionOffset.x;
-      this.position.y = y + this.bindedPositionOffset.y;
-      this.position.z = z + this.bindedPositionOffset.z;
+      this.position.x = x + vx;
+      this.position.y = y + vy;
+      this.position.z = z + vz;
     }
     
     // Move camera transforming CSS
@@ -84,10 +80,8 @@ export default class Camera {
     this.rotation.pitch = Math.min(Math.max(pitch, -90), 90);
   }
 
-  public bindPosition(entity: Entity, offset?: { x: number, y: number, z: number }): void {
+  public bindPosition(entity: Player): void {
     this.bindedEntity.position = entity;
-
-    if (offset) this.bindedPositionOffset = offset;
   }
 
   public getRotation() {

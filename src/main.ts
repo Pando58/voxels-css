@@ -16,6 +16,13 @@ const camera = new Camera(scene, {
 });
 
 const input = new InputController(viewport, {
+  up: 'KeyW',
+  left: 'KeyA',
+  down: 'KeyS',
+  right: 'KeyD',
+  jump: 'Space',
+  crouch: 'ControlLeft'
+}, {
   mouseSensitivity: 0.1
 });
 
@@ -23,16 +30,12 @@ const input = new InputController(viewport, {
 const player = new Player(world, { x: 8, y: 6, z: 16 });
 
 world.addEntity(player);
-camera.bindPosition(player, {
-  x: 0,
-  y: 1.625,
-  z: 0
-});
+camera.bindPosition(player);
 player.attachToCamera(camera);
 
 
-input.onMouse((x, y, sensitivity) => {
-  camera.rotate(x * sensitivity, y * sensitivity);
+input.onMouse((x, y) => {
+  camera.rotate(x, y);
 });
 
 input.onKeyboard((key, pressed) => {
