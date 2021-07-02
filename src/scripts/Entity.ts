@@ -31,7 +31,7 @@ export default class Entity {
     this.position = {x, y, z};
   }
 
-  public loop(): void {}
+  public loop(delta: number): void {}
 
   public getPosition() {
     return this.position;

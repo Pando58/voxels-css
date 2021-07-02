@@ -2,7 +2,8 @@ import './styles/main.scss'
 import World from './scripts/World'
 import Camera from './scripts/Camera'
 import InputController from './scripts/InputController'
-import Player from './scripts/entities/Player';
+import Player from './scripts/entities/Player'
+import LoopController from './scripts/LoopController'
 
 const viewport = document.querySelector<HTMLDivElement>('#game-viewport')!;
 const scene = document.querySelector<HTMLDivElement>('#scene')!;
@@ -49,12 +50,20 @@ input.onKeyboard((key, pressed) => {
 // input.onKeyboardLoop('jump',   true, () => player.moveY(0.1));
 // input.onKeyboardLoop('crouch', true, () => player.moveY(-0.1));
 
-function loop() {
+const loop = new LoopController(delta => {
   input.loop();
   camera.loop();
-  world.loop();
-  
-  requestAnimationFrame(loop);
-}
+  world.loop(delta);
+});
 
-loop();
+loop.deltaTime();
+
+// function loop() {
+//   input.loop();
+//   camera.loop();
+//   world.loop();
+  
+//   requestAnimationFrame(loop);
+// }
+
+// loop();

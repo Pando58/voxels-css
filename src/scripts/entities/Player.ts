@@ -4,8 +4,8 @@ import Block from '../Block'
 import World from '../World';
 
 export default class Player extends Entity {
-  private walkSpeed = 0.05;
-  private runSpeed = 0.1;
+  private walkSpeed = 0.003;
+  private runSpeed = 0.005;
   private onGround = false;
   private jumpForce = 0.11;
   private verticalFlySpeed = 0.15;
@@ -40,7 +40,7 @@ export default class Player extends Entity {
     super(world, {x, y, z});
   }
 
-  public loop(): void {
+  public loop(delta: number): void {
     // Rotate
     if (this.attachedCamera !== null) {
       const { yaw, pitch } = this.attachedCamera.getRotation();
@@ -54,8 +54,8 @@ export default class Player extends Entity {
     const zVal = (this.keys.down ? 1 : 0) - (this.keys.up ? 1 : 0);
     // const yVal = (this.keys.jump ? 1 : 0) - (this.keys.crouch ? 1 : 0);
 
-    this.motion.x = (Math.cos(this.rotation.yaw * Math.PI / 180) * xVal * this.walkSpeed) + (Math.cos((this.rotation.yaw + 90) * Math.PI / 180) * zVal * this.walkSpeed);
-    this.motion.z = (Math.sin(this.rotation.yaw * Math.PI / 180) * xVal * this.walkSpeed) + (Math.sin((this.rotation.yaw + 90) * Math.PI / 180) * zVal * this.walkSpeed);
+    this.motion.x = (Math.cos(this.rotation.yaw * Math.PI / 180) * xVal * this.walkSpeed * delta) + (Math.cos((this.rotation.yaw + 90) * Math.PI / 180) * zVal * this.walkSpeed * delta);
+    this.motion.z = (Math.sin(this.rotation.yaw * Math.PI / 180) * xVal * this.walkSpeed * delta) + (Math.sin((this.rotation.yaw + 90) * Math.PI / 180) * zVal * this.walkSpeed * delta);
     // this.motion.y = yVal * this.verticalFlySpeed;
 
     if (this.onGround) {
@@ -63,7 +63,7 @@ export default class Player extends Entity {
         this.motion.y = 0;
       }
     } else {
-      this.motion.y -= (10 / 1800);
+      this.motion.y -= 10 / 1800;
     }
 
     this.move(this.motion.x, this.motion.y, this.motion.z);

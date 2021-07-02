@@ -27,8 +27,8 @@ export default class World {
     }
   }
 
-  public loop(): void {
-    this.entities.forEach(i => i.loop());
+  public loop(delta: number): void {
+    this.entities.forEach(i => i.loop(delta));
   }
 
   private createBlock(x: number, y: number, z: number): void {

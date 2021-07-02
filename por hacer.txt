@@ -2,7 +2,7 @@
 [*] agregar argumento para input para elegir las teclas
 [*] camara poner offset linea de vision de entidad
 [*] cambiar transformacion css por variables (para revisar si tiene mejor rendimiento)
-[ ] Agregar delta time
+[*] Agregar delta time
 
 
 renderizar bloques
