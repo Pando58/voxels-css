@@ -52,16 +52,11 @@ export default class Camera {
     }
     
     // Move camera transforming CSS
-    this.scene.style.transform = `
-    rotateX(${-this.rotation.pitch}deg)
-    rotateY(${ this.rotation.yaw}deg)
-    translateX(0.5rem)
-    translateY(-0.5rem)
-    translateZ(0.5rem)
-    translateX(${-this.position.x}rem)
-    translateY(${ this.position.y}rem)
-    translateZ(${-this.position.z}rem)
-    `;
+    this.scene.style.setProperty('--yaw', this.rotation.yaw + 'deg');
+    this.scene.style.setProperty('--pitch', -this.rotation.pitch + 'deg');
+    this.scene.style.setProperty('--x', -this.position.x + 'rem');
+    this.scene.style.setProperty('--y',  this.position.y + 'rem');
+    this.scene.style.setProperty('--z', -this.position.z + 'rem');
   }
 
   public rotate(x: number, y: number): void {

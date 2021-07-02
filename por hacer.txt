@@ -1,7 +1,7 @@
 [*] quitar argumento de sensibilidad en input  y hacer el calculo antes
 [*] agregar argumento para input para elegir las teclas
 [*] camara poner offset linea de vision de entidad
-[ ] cambiar transformacion css por variables (para revisar si tiene mejor rendimiento)
+[*] cambiar transformacion css por variables (para revisar si tiene mejor rendimiento)
 [ ] Agregar delta time
 
 

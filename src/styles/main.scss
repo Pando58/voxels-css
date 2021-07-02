@@ -24,15 +24,30 @@ body {
 }
 
 #scene-pos-wrapper {
-  transform:
-    translateZ(2.5rem) // Match with viewport perspective distance
-  ;
+  transform: translateZ(2.5rem); // Match with viewport perspective distance
   transform-style: preserve-3d;
 }
 
 #scene {
   transform-style: preserve-3d;
   position: relative;
+
+  --yaw: 0deg;
+  --pitch: 0deg;
+  --x: 0rem;
+  --y: 0rem;
+  --z: 0rem;
+  
+  transform:
+    rotateX(var(--pitch)) // Rotation
+    rotateY(var(--yaw))
+    translateX(0.5rem) // Align cube top left instead of center
+    translateY(-0.5rem)
+    translateZ(0.5rem)
+    translateX(var(--x)) // Position
+    translateY(var(--y))
+    translateZ(var(--z))
+  ;
 }
 
 .cube {
