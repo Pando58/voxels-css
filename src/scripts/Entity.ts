@@ -31,6 +31,7 @@ export default class Entity {
     this.position = {x, y, z};
   }
 
+  // @ts-ignore
   public loop(delta: number): void {}
 
   public getPosition() {

@@ -5,9 +5,11 @@ import World from '../World';
 
 export default class Player extends Entity {
   private walkSpeed = 0.003;
+  // @ts-ignore
   private runSpeed = 0.005;
   private onGround = false;
   private jumpForce = 0.11;
+  // @ts-ignore
   private verticalFlySpeed = 0.15;
 
   private viewOffset = {
